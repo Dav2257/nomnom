@@ -5,7 +5,13 @@ import { getUsers } from './services/api'
 const users = ref([])
 
 onMounted(async () => {
-  users.value = await getUsers()
+  try {
+    const response = await getUsers()
+    console.log(response) // Debugging
+    users.value = response.results // Ensure this matches the API response
+  } catch (error) {
+    console.error('Failed to fetch users:', error)
+  }
 })
 </script>
 
@@ -13,7 +19,7 @@ onMounted(async () => {
   <div>
     <h1>Users</h1>
     <ul>
-      <li v-for="user in users.results" :key="user.id">{{ user.nama }}</li>
+      <li v-for="user in users" :key="user.id">{{ user.nama }}</li>
     </ul>
   </div>
 </template>
