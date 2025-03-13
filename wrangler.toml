@@ -1,0 +1,8 @@
+name = "Vin"
+compatibility_date = "2023-10-01"
+main = "src/worker.js" 
+
+[[d1_databases]]
+binding = "DB" # Nama binding yang akan digunakan di Workers
+database_name = "nomnom"
+database_id = "b7536040-5967-457a-8ea2-f90e99e6d54c"
