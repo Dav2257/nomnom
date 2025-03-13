@@ -13,7 +13,7 @@ onMounted(async () => {
   <div>
     <h1>Users</h1>
     <ul>
-      <li v-for="user in users.results" :key="user.id">{{ user.name }}</li>
+      <li v-for="user in users.results" :key="user.id">{{ user.nama }}</li>
     </ul>
   </div>
 </template>

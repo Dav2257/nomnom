@@ -3,7 +3,7 @@ export async function onRequest(context) {
   const { pathname } = new URL(request.url)
 
   if (pathname === '/api/produks') {
-    const result = await env.DB.prepare('SELECT * FROM produks').all()
+    const result = await env.DB.prepare('SELECT * FROM produk').all()
     return new Response(JSON.stringify(result), {
       headers: { 'Content-Type': 'application/json' },
     })
