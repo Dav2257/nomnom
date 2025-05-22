@@ -1,0 +1,16 @@
+{
+    "name": "event-manager",
+    "compatibility_date": "2024-12-30",
+    "assets": { 
+    "not_found_handling": "single-page-application",
+    "binding": "ASSETS"
+    },
+    "main": "./api/index.ts",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "nomnom",
+      "database_id": "57b6b345-deb9-4227-b59e-8cd6ba8647f0"
+    }
+  ]
+}
