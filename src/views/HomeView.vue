@@ -59,6 +59,12 @@ function clearCart() {
 function cartTotal() {
   return cart.value.reduce((sum, item) => sum + item.product.price * item.quantity, 0)
 }
+
+// Fungsi checkout
+function checkout() {
+  alert('Terima kasih sudah berbelanja!\nTotal belanja: Rp' + cartTotal().toFixed(2));
+  clearCart();
+}
 </script>
 
 <template>
@@ -82,6 +88,15 @@ function cartTotal() {
       <div v-if="cart.length > 0" class="cart-total">
         Total: Rp{{ cartTotal().toFixed(2) }}
         <button @click="clearCart">Kosongkan Keranjang</button>
+      </div>
+      <div class="checkout-section">
+        <button
+          class="checkout-btn"
+          :disabled="cart.length === 0"
+          @click="checkout"
+        >
+          Checkout
+        </button>
       </div>
     </section>
 
@@ -159,6 +174,27 @@ function cartTotal() {
 }
 .cart-section button:hover {
   background: #b71c1c;
+}
+.checkout-section {
+  margin-top: 15px;
+  text-align: right;
+}
+.checkout-btn {
+  background-color: #2196F3;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.checkout-btn:disabled {
+  background: #b0bec5;
+  cursor: not-allowed;
+}
+.checkout-btn:hover:enabled {
+  background: #1976d2;
 }
 
 .product-list {
