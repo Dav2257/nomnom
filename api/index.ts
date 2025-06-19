@@ -26,7 +26,7 @@ app.put('/api/nomnom/:id', async (c) => {
   const nomId = c.req.param('id')
 
   const input = await c.req.json<any>()
-  const query = `UPDATE nomnom SET name = "${input.name}", category = "${input.category}", price = ${input.price} WHERE id = "${eventId}"`
+  const query = `UPDATE nomnom SET name = "${input.name}", category = "${input.category}", price = ${input.price} WHERE id = "${nomId}"`
   const nom = await c.env.DB.exec(query)
 
   return c.json(nom)
