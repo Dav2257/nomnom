@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
 
 interface Product {
   id: number
@@ -60,10 +61,27 @@ function cartTotal() {
   return cart.value.reduce((sum, item) => sum + item.product.price * item.quantity, 0)
 }
 
-// Fungsi checkout
+// Fungsi untuk menyimpan data keranjang ke backend Hono
+async function saveCartToBackend() {
+  for (const item of cart.value) {
+    await fetch('/api/nomnom', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: item.product.name,
+        category: item.product.category,
+        price: item.product.price
+      })
+    })
+  }
+}
+
+// Fungsi checkout yang juga menyimpan ke backend
 function checkout() {
-  alert('Terima kasih sudah berbelanja!\nTotal belanja: Rp' + cartTotal().toFixed(2));
-  clearCart();
+  saveCartToBackend().then(() => {
+    alert('Terima kasih sudah berbelanja!\nTotal belanja: Rp' + cartTotal().toFixed(2));
+    clearCart();
+  })
 }
 </script>
 

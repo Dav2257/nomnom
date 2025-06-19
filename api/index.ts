@@ -13,30 +13,30 @@ app.post('/api/nomnom', async (c) => {
   const newId = crypto.randomUUID()
   const input = await c.req.json<any>()
   const query = `INSERT INTO nomnom(id,name,category,price) values ("${newId}","${input.name}","${input.category}",${input.price})`
-  const newNom = await c.env.DB.exec(query)
-  return c.json(newNom)
+  const newnom = await c.env.DB.exec(query)
+  return c.json(newnom)
 })
-app.get('/api/events/:id', async (c) => {
-  const eventId = c.req.param('id')
-  let { results } = await c.env.DB.prepare('SELECT * FROM events WHERE id = ?').bind(eventId).all()
+app.get('/api/nomnom/:id', async (c) => {
+  const nomId = c.req.param('id')
+  let { results } = await c.env.DB.prepare('SELECT * FROM nomnom WHERE id = ?').bind(nomId).all()
   return c.json(results[0])
 })
 
-app.put('/api/events/:id', async (c) => {
-  const eventId = c.req.param('id')
+app.put('/api/nomnom/:id', async (c) => {
+  const nomId = c.req.param('id')
 
   const input = await c.req.json<any>()
-  const query = `UPDATE events SET name = "${input.name}", place = "${input.place}", time = ${input.time} WHERE id = "${eventId}"`
-  const event = await c.env.DB.exec(query)
+  const query = `UPDATE nomnom SET name = "${input.name}", category = "${input.category}", price = ${input.price} WHERE id = "${eventId}"`
+  const nom = await c.env.DB.exec(query)
 
-  return c.json(event)
+  return c.json(nom)
 })
 
-app.delete('/api/events/:id', async (c) => {
-  const eventId = c.req.param('id')
+app.delete('/api/nomnom/:id', async (c) => {
+  const nomId = c.req.param('id')
 
-  const query = `DELETE FROM events WHERE id = "${eventId}"`
-  const event = await c.env.DB.exec(query)
-  return c.json(event)
+  const query = `DELETE FROM nomnom WHERE id = "${nomId}"`
+  const nom = await c.env.DB.exec(query)
+  return c.json(nom)
 })
    export default app
