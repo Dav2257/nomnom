@@ -1,17 +1,19 @@
-interface Env {
-  ASSETS: Fetcher;
-  DB: D1Database;
+import { Hono } from 'hono'
+type Bindings = {
+  ASSETS: Fetcher
+  DB: D1Database
 }
+const app = new Hono<{ Bindings: Bindings }>()
 
-export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const url = new URL(request.url);
-
-    if (url.pathname.startsWith("/api/nomnoms")) {
-      const { results } = await env.DB.prepare("SELECT * FROM nomnoms").all();
-      return Response.json(results);
-    }
-
-    return env.ASSETS.fetch(request);
-  },
-};
+app.get('/api/nomnom', async (c) => {
+  let { results } = await c.env.DB.prepare("SELECT * FROM nomnom").all()
+  return c.json(results)
+})
+app.post('/api/nomnom', async (c) => { 
+  const newId = crypto.randomUUID()
+  const input = await c.req.json<any>()
+  const query = `INSERT INTO nomnom(id,name,place,time) values ("${newId}","${input.name}","${input.place}",${input.time})`
+  const newNom = await c.env.DB.exec(query)
+  return c.json(newNom)
+})
+   export default app
